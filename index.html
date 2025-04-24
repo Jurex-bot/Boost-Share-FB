@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+8<!DOCTYPE html>
 <html lang="en" class="dark">
 
 <head>
@@ -404,8 +404,7 @@
                 </a>
             </li>
         </ul>
-    </div>
-</section>
+    </div
                         <div class="flex items-start gap-3 p-3.5 bg-warning-bg rounded-lg border border-warning-border shadow-sm">
                             <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
                             <span class="text-sm text-warning-text">Use responsibly. Avoid excessive sharing to prevent Facebook restrictions.</span>
@@ -913,6 +912,28 @@
                     navItem.classList.add('text-text-muted');
                 }
             });
+function setActiveSection(sectionName) {
+    const targetSectionId = `${sectionName}-section`;
+    const targetSection = document.getElementById(targetSectionId);
+
+    contentSections.forEach(section => section.classList.remove('active'));
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+
+    navItems.forEach((navItem, index) => {
+        if (navItem.dataset.section === sectionName) {
+            navItem.classList.remove('text-text-muted');
+            navItem.classList.add('text-primary');
+            if (navIndicator) {
+                navIndicator.style.transform = `translateX(${index * 100}%)`;
+            }
+        } else {
+            navItem.classList.remove('text-primary');
+            navItem.classList.add('text-text-muted');
+        }
+    });
+}
 
             sideMenuItems.forEach((sideItem) => {
                  const iconElement = sideItem.querySelector('i[data-lucide]') || sideItem.querySelector('svg');
