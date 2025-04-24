@@ -1,4 +1,4 @@
-8<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 
 <head>
@@ -286,6 +286,79 @@
             transition: opacity 0.3s ease-in-out;
         }
 
+        #terminal {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background-color: theme('colors.modal-bg');
+            border: 1px solid theme('colors.border-color');
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        #terminal-header {
+            padding: 10px 15px;
+            background-color: theme('colors.bg-card');
+            border-bottom: 1px solid theme('colors.border-color');
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #terminal-content {
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            color: theme('colors.text-main');
+            overflow-y: auto;
+            max-height: 350px;
+        }
+        #terminal-toggle {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: theme('colors.primary');
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            transition: transform 0.2s ease;
+        }
+        #terminal-toggle:hover {
+            transform: scale(1.1);
+        }
+        #terminal-toggle.active {
+            background-color: theme('colors.primary-darker');
+        }
+        .terminal-line {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .terminal-line.success {
+            color: #22c55e;
+        }
+        .terminal-line.error {
+            color: #ef4444;
+        }
+        .terminal-line.info {
+            color: #8B5CF6;
+        }
+        .terminal-line.warning {
+            color: #f59e0b;
+        }
+        .terminal-timestamp {
+            color: theme('colors.text-muted');
+            margin-right: 8px;
+        }
+
     </style>
 </head>
 
@@ -300,6 +373,9 @@
                    <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">v2.1.0</span>
                 </div>
                 <div class="flex items-center space-x-3">
+                    <button id="developer-button" class="text-text-muted hover:text-primary transition-colors p-1.5 bg-primary/10 rounded-lg">
+                        <i data-lucide="code" class="w-5 h-5 text-primary"></i>
+                    </button>
                     <button class="text-text-muted hover:text-primary transition-colors p-1.5 bg-primary/10 rounded-lg">
                         <i data-lucide="settings-2" class="w-5 h-5 text-primary"></i>
                     </button>
@@ -385,26 +461,6 @@
                             <i data-lucide="video" class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"></i>
                             <span class="text-sm text-video-text">There's now a video guide in the Tutorial section!</span>
                         </div>
-<section id="developers-section" class="content-section">
-    <h2 class="section-title">Developers</h2>
-    <div class="p-3 bg-bg-card rounded-xl border border-border-color shadow-card">
-        <ul class="space-y-4">
-            <li>
-                <a href="https://www.facebook.com/joshuaapostol2006" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-3 text-primary hover:text-primary-darker">
-                    <i data-lucide="user" class="w-5 h-5"></i>
-                    <span>Joshua Apostol</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.facebook.com/jurex.aso" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-3 text-primary hover:text-primary-darker">
-                    <i data-lucide="user" class="w-5 h-5"></i>
-                    <span>Jurex Aso</span>
-                </a>
-            </li>
-        </ul>
-    </div
                         <div class="flex items-start gap-3 p-3.5 bg-warning-bg rounded-lg border border-warning-border shadow-sm">
                             <i data-lucide="alert-triangle" class="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5"></i>
                             <span class="text-sm text-warning-text">Use responsibly. Avoid excessive sharing to prevent Facebook restrictions.</span>
@@ -449,6 +505,31 @@
             </div>
         </div>
 
+        <div id="developerModal" class="modal">
+            <div class="modal-content text-left">
+                <button type="button" class="modal-close-button" aria-label="Close developer info" onclick="document.getElementById('developerModal').style.display='none'">
+                    <i data-lucide="x" class="w-4 h-4 text-text-muted"></i>
+                </button>
+                <h3 class="text-lg font-semibold mb-4 text-center">Developers</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-3 bg-bg-card rounded-lg border border-border-color">
+                        <i data-lucide="user" class="w-5 h-5 text-primary"></i>
+                        <div>
+                            <h4 class="font-medium">Joshua Apostol</h4>
+                            <a href="https://www.facebook.com/joshuaapostol2006" target="_blank" class="text-xs text-primary hover:underline">View Profile</a>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-bg-card rounded-lg border border-border-color">
+                        <i data-lucide="user" class="w-5 h-5 text-primary"></i>
+                        <div>
+                            <h4 class="font-medium">Jurex Aso</h4>
+                            <a href="https://www.facebook.com/jurex.aso" target="_blank" class="text-xs text-primary hover:underline">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="apkDownloadModal" class="modal">
             <div class="modal-content text-center flex flex-col items-center gap-4">
                 <button type="button" class="modal-close-button" aria-label="Close APK Download" onclick="handleApkModalClose('later')">
@@ -467,6 +548,22 @@
                     Maybe Later
                 </button>
             </div>
+        </div>
+
+        <div id="terminal">
+            <div id="terminal-header" class="flex items-center justify-between">
+                <span class="font-medium">Terminal</span>
+                <button id="terminal-close" class="text-text-muted hover:text-primary">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div id="terminal-content">
+                <!-- Terminal logs will be added here dynamically -->
+            </div>
+        </div>
+
+        <div id="terminal-toggle">
+            <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
         </div>
 
         <div id="menu-overlay" class="fixed inset-0 bg-black/60 z-[55] hidden opacity-0"></div>
@@ -493,25 +590,18 @@
                      <i data-lucide="bell" class="w-5 h-5"></i>
                      <span>Notifications</span>
                  </a>
-        <!-- Add this new button -->
-        <a href="#" data-section="developers" class="side-menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:text-text-main hover:bg-white/10 transition-colors">
-            <i data-lucide="users" class="w-5 h-5"></i>
-            <span>Developers</span>
-        </a>
-    </nav>
-    <div class="mt-auto pt-4 border-t border-nav-border">
-        <!-- Existing content -->
-    </div>
-</div>
+                 <a href="#" id="side-developer-button" class="side-menu-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-muted hover:text-text-main hover:bg-white/10 transition-colors">
+                     <i data-lucide="code" class="w-5 h-5"></i>
+                     <span>Developers</span>
+                 </a>
             </nav>
             <div class="mt-auto pt-4 border-t border-nav-border">
-                 <a href="https://www.facebook.com/joshuaapostol2006" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full bg-primary/10 text-primary py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary/20 transition-all duration-300 shadow-sm active:scale-[0.98]">
-                     <i data-lucide="code" class="w-4 h-4"></i>
-                     Developer Profile
-                 </a>
+                 <button id="side-terminal-button" class="flex items-center justify-center gap-2 w-full bg-primary/10 text-primary py-2.5 px-4 rounded-lg font-semibold text-sm hover:bg-primary/20 transition-all duration-300 shadow-sm active:scale-[0.98]">
+                     <i data-lucide="terminal" class="w-4 h-4"></i>
+                     Open Terminal
+                 </button>
             </div>
         </div>
-
 
     </div>
 
@@ -540,6 +630,14 @@
         const responseMessageElement = document.getElementById('responseMessage');
         const responseModalIconElement = document.getElementById('modal-icon');
         const apkDownloadModal = document.getElementById('apkDownloadModal');
+        const developerModal = document.getElementById('developerModal');
+        const developerButton = document.getElementById('developer-button');
+        const sideDeveloperButton = document.getElementById('side-developer-button');
+        const sideTerminalButton = document.getElementById('side-terminal-button');
+        const terminal = document.getElementById('terminal');
+        const terminalToggle = document.getElementById('terminal-toggle');
+        const terminalClose = document.getElementById('terminal-close');
+        const terminalContent = document.getElementById('terminal-content');
         const form = document.getElementById('share-boost-form');
         const menuButton = document.getElementById('menu-button');
         const sideMenu = document.getElementById('side-menu');
@@ -552,13 +650,37 @@
 
         let intervalCheck;
         let currentSelectedServer = null;
+        let sharesSentCount = 0;
+
+        function addTerminalLog(message, type = 'info') {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const logElement = document.createElement('div');
+            logElement.className = `terminal-line ${type}`;
+            logElement.innerHTML = `
+                <span class="terminal-timestamp">[${timeString}]</span>
+                <span class="terminal-message">${message}</span>
+            `;
+            terminalContent.appendChild(logElement);
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+        }
+
+        function toggleTerminal() {
+            if (terminal.style.display === 'block') {
+                terminal.style.display = 'none';
+                terminalToggle.classList.remove('active');
+            } else {
+                terminal.style.display = 'block';
+                terminalToggle.classList.add('active');
+            }
+        }
 
         function handleApkModalClose(action) {
             const oneHourInMillis = 1 * 60 * 60 * 1000;
             const dismissUntilTimestamp = Date.now() + oneHourInMillis;
             localStorage.setItem('apkPopupDismissedUntil', dismissUntilTimestamp.toString());
             localStorage.removeItem('apkPopupDismissedPermanently');
-            console.log(`APK Popup: Dismissed via '${action}' until ${new Date(dismissUntilTimestamp).toLocaleString()}`);
+            addTerminalLog(`APK popup dismissed until ${new Date(dismissUntilTimestamp).toLocaleTimeString()}`, 'info');
 
             if (apkDownloadModal) {
                 apkDownloadModal.style.display = 'none';
@@ -602,9 +724,9 @@
                 serverSelectButtonText.textContent = `${serverDefinitions[key].name} (Active)`;
                 serverModal.style.display = 'none';
                 validateForm();
+                addTerminalLog(`Selected server: ${serverDefinitions[key].name}`, 'success');
             }
         }
-
 
         serverSelectButton.addEventListener('click', () => {
             serverModal.style.display = 'flex';
@@ -640,6 +762,7 @@
 
         async function checkServerStatus() {
             let oneServerActive = false;
+            addTerminalLog('Checking server statuses...', 'info');
 
             const statusPromises = Object.keys(serverDefinitions).map(async (key) => {
                 const server = serverDefinitions[key];
@@ -653,11 +776,6 @@
                 let statusColorClass = 'bg-gray-500';
                 let isActive = false;
 
-                 const activeColor = tailwind.config.theme.extend.colors['status-active'];
-                 const offlineColor = tailwind.config.theme.extend.colors['status-offline'];
-                 const timeoutColor = tailwind.config.theme.extend.colors['status-timeout'];
-
-
                 try {
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), 6000);
@@ -667,13 +785,16 @@
                     statusColorClass = 'bg-status-active';
                     isActive = true;
                     oneServerActive = true;
+                    addTerminalLog(`${server.name}: Online`, 'success');
                 } catch (error) {
                     if (error.name === 'AbortError') {
                         statusText = 'Timeout';
                         statusColorClass = 'bg-status-timeout';
+                        addTerminalLog(`${server.name}: Timeout`, 'warning');
                     } else {
                         statusText = 'Offline';
                         statusColorClass = 'bg-status-offline';
+                        addTerminalLog(`${server.name}: Offline`, 'error');
                     }
                 }
 
@@ -691,7 +812,6 @@
                      serverItem.classList.add('border-input-border');
                  }
 
-
                 if (!isActive && currentSelectedServer === key) {
                     currentSelectedServer = null;
                     selectedServerInput.value = '';
@@ -699,6 +819,7 @@
                     serverItem.classList.remove('border-primary', 'bg-primary/10');
                     serverItem.classList.add('border-input-border', 'bg-input-bg');
                     validateForm();
+                    addTerminalLog(`Server ${server.name} went offline`, 'error');
                 } else if (isActive && currentSelectedServer === key) {
                     serverSelectButtonText.textContent = `${server.name} (Active)`;
                     serverItem.classList.remove('border-input-border', 'bg-input-bg');
@@ -724,6 +845,7 @@
 
             clearInterval(intervalCheck);
             intervalCheck = setInterval(checkServerStatus, 60000);
+            addTerminalLog('Server status check completed', 'info');
         }
 
         function showModal(message, type = 'info') {
@@ -739,10 +861,12 @@
                  modalContent.classList.add('success');
                  iconName = 'check-circle-2';
                  iconColorClass = 'text-status-active';
+                 addTerminalLog(message, 'success');
              } else if (type === 'error') {
                  modalContent.classList.add('error');
                  iconName = 'alert-circle';
                  iconColorClass = 'text-status-offline';
+                 addTerminalLog(message, 'error');
              } else if (type === 'loading') {
                  iconName = 'loader-circle';
                  iconColorClass = 'text-primary';
@@ -761,7 +885,7 @@
              }, 4000);
          }
 
-        [responseModal, serverModal, apkDownloadModal].forEach(modalInstance => {
+        [responseModal, serverModal, apkDownloadModal, developerModal].forEach(modalInstance => {
             if (modalInstance) {
                 modalInstance.addEventListener('click', (event) => {
                     if (event.target === modalInstance) {
@@ -774,7 +898,6 @@
                 });
             }
         });
-
 
         function validateForm() {
             const serverSelected = selectedServerInput.value !== '';
@@ -797,7 +920,6 @@
                  updateButtonState('Start Boosting', 'rocket', true, false);
              }
          }
-
 
         form.onsubmit = async function(event) {
             event.preventDefault();
@@ -825,6 +947,7 @@
 
             updateButtonState('Submitting...', 'loader-circle', false);
             showModal('Submitting request...', 'loading');
+            addTerminalLog(`Submitting share request for ${amount} shares...`, 'info');
 
             try {
                 const serverUrl = serverDefinitions[serverValue]?.url;
@@ -859,7 +982,12 @@
                     throw new Error(data?.message || response.statusText || `Server error: ${response.status}`);
                 }
 
-                showModal(data.message || 'Submitted successfully! Processing started.', 'success');
+                const successMessage = data.message || 'Submitted successfully! Processing started.';
+                showModal(successMessage, 'success');
+                sharesSentCount += parseInt(amount);
+                addTerminalLog(successMessage, 'success');
+                addTerminalLog(`Total shares sent: ${sharesSentCount}`, 'info');
+                
                 form.reset();
                 selectedServerInput.value = '';
                 serverSelectButtonText.textContent = 'Select a Server...';
@@ -876,6 +1004,7 @@
                     ? 'Request timed out. Server might be busy or unresponsive.'
                     : `Error: ${error.message}`;
                 showModal(errorMessage, 'error');
+                addTerminalLog(errorMessage, 'error');
             } finally {
                  if (responseModalIconElement.querySelector('[data-lucide="loader-circle"]')) {
                      responseModal.style.display = 'none';
@@ -889,7 +1018,6 @@
         if (navIndicator) {
              navIndicator.style.width = `${indicatorWidthPercent}%`;
         }
-
 
         function setActiveSection(sectionName) {
             const targetSectionId = `${sectionName}-section`;
@@ -912,28 +1040,6 @@
                     navItem.classList.add('text-text-muted');
                 }
             });
-function setActiveSection(sectionName) {
-    const targetSectionId = `${sectionName}-section`;
-    const targetSection = document.getElementById(targetSectionId);
-
-    contentSections.forEach(section => section.classList.remove('active'));
-    if (targetSection) {
-        targetSection.classList.add('active');
-    }
-
-    navItems.forEach((navItem, index) => {
-        if (navItem.dataset.section === sectionName) {
-            navItem.classList.remove('text-text-muted');
-            navItem.classList.add('text-primary');
-            if (navIndicator) {
-                navIndicator.style.transform = `translateX(${index * 100}%)`;
-            }
-        } else {
-            navItem.classList.remove('text-primary');
-            navItem.classList.add('text-text-muted');
-        }
-    });
-}
 
             sideMenuItems.forEach((sideItem) => {
                  const iconElement = sideItem.querySelector('i[data-lucide]') || sideItem.querySelector('svg');
@@ -990,6 +1096,28 @@ function setActiveSection(sectionName) {
         if(closeMenuButton) closeMenuButton.addEventListener('click', closeSideMenu);
         if(menuOverlay) menuOverlay.addEventListener('click', closeSideMenu);
 
+        if(developerButton) developerButton.addEventListener('click', () => {
+            developerModal.style.display = 'flex';
+            lucide.createIcons();
+            addTerminalLog('Opened developer information', 'info');
+        });
+
+        if(sideDeveloperButton) sideDeveloperButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            developerModal.style.display = 'flex';
+            lucide.createIcons();
+            closeSideMenu();
+            addTerminalLog('Opened developer information', 'info');
+        });
+
+        if(sideTerminalButton) sideTerminalButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleTerminal();
+            closeSideMenu();
+        });
+
+        if(terminalToggle) terminalToggle.addEventListener('click', toggleTerminal);
+        if(terminalClose) terminalClose.addEventListener('click', toggleTerminal);
 
         window.onload = () => {
             renderServerList();
@@ -1010,11 +1138,11 @@ function setActiveSection(sectionName) {
                 const now = Date.now();
 
                 if (now > dismissedUntil) {
-                     console.log("Showing APK Popup");
+                     addTerminalLog('Showing APK download popup', 'info');
                      apkDownloadModal.style.display = 'flex';
                      lucide.createIcons();
                 } else {
-                    console.log("APK Popup hidden until dismissal time.");
+                    addTerminalLog('APK popup is currently dismissed', 'info');
                     apkDownloadModal.style.display = 'none';
                 }
             }
@@ -1027,6 +1155,8 @@ function setActiveSection(sectionName) {
              }
 
             lucide.createIcons();
+            addTerminalLog('Share Boost initialized', 'success');
+            addTerminalLog('Ready to boost your posts!', 'info');
         }
 
     </script>
